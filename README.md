@@ -9,8 +9,11 @@
 
 ```text
 AI-Content-Studio/ (Root)
-├── yt-dlp.exe              <-- เครื่องมือดาวน์โหลด
-├── bin/                    <-- เครื่องมือตัดต่อ (ffmpeg)
+├── process.py              <-- สคริปต์หลัก
+├── download.bat            <-- ไฟล์รันคำสั่ง
+├── bin/                    <-- โฟลเดอร์เก็บโปรแกรม 🛠️
+│   ├── yt-dlp.exe          <-- ตัวดาวน์โหลด (ย้ายมาที่นี่แล้ว)
+│   └── ffmpeg.exe          <-- ตัวตัดต่อ
 ├── youtube/
 │   └── masters/            <-- เก็บวิดีโอตัวเต็ม (แชร์ร่วมกัน) 📦
 ├── projects/
@@ -49,5 +52,5 @@ download.bat "[URL]" --start [SEC] --duration [SEC] --output "clip.mp4" --projec
 โปรเจกต์นี้ทำงานตามกฎใน [AI_STUDIO_RULES.md](AI_STUDIO_RULES.md) กรุณาอ่านและปฏิบัติตามโครงสร้างเสมอ
 
 ## 🔧 การบำรุงรักษา (Maintenance)
-*   **Update yt-dlp**: `yt-dlp.exe -U`
+*   **Update yt-dlp**: `bin\yt-dlp.exe -U`
 *   **Clean Up**: ไฟล์สื่อในโฟลเดอร์วันที่ถูกละเว้นจาก Git สามารถลบได้เมื่อจบงานโดยไม่กระทบต่อ Git History

@@ -47,7 +47,7 @@ def save_metadata(path, data):
 
 def process_video(url, start_time=None, duration=None, last_seconds=None, output_name="clip_result.mp4", project_type="public_commercial"):
     root_dir = os.path.dirname(os.path.abspath(__file__))
-    ytdlp_path = os.path.join(root_dir, "yt-dlp.exe")
+    ytdlp_path = os.path.join(root_dir, "bin", "yt-dlp.exe") # Updated path
     ffmpeg_path = os.path.join(root_dir, "bin", "ffmpeg.exe")
     
     # Project Base Path
