@@ -34,53 +34,27 @@ def run_mission():
 
     print(f"Mission: {task['title']}")
     
-    # 1. เปิด Chrome เปล่า
-    subprocess.Popen(f'"{CHROME_PATH}" --profile-directory="{CHROME_PROFILE}" about:blank', shell=True)
-    time.sleep(5)
+    # 1. เปิด Chrome ไปที่ ChatGPT โดยตรง
+    print(f"Action: Opening Chrome at {CHAT_URL}...")
+    subprocess.Popen(f'"{CHROME_PATH}" --profile-directory="{CHROME_PROFILE}" {CHAT_URL}', shell=True)
+    time.sleep(10) # รอเบราเซอร์เปิด
     
-    # 2. ชิดขวา
-    pyautogui.hotkey('win', 'right')
-    time.sleep(1)
-    pyautogui.press('esc')
+    # 2. รอโหลด ChatGPT จนสมบูรณ์
+    print("Waiting 10s for ChatGPT to start loading...")
+    time.sleep(10)
+
+    # 3. เตรียมข้อมูลลง Clipboard
+    print(f"Action: Preparing full prompt to clipboard...")
+    full_prompt = f"{task['url']}\n\n{template}"
+    pyperclip.copy(full_prompt)
     time.sleep(1)
 
-    # 3. เข้า ChatGPT ผ่าน Address Bar (ใช้ Copy-Paste เพื่อกันภาษาไทย)
-    pyautogui.hotkey('ctrl', 'l')
-    time.sleep(1)
-    pyperclip.copy(CHAT_URL)
-    time.sleep(0.5)
-    pyautogui.hotkey('ctrl', 'v')
-    time.sleep(0.5)
-    pyautogui.press('enter')
+    # 4. เรียกใช้ AutoHotkey มาจัดการ Focus และ Paste (ชัวร์ที่สุดบน Windows)
+    print("Action: Triggering AutoHotkey for Stealth Paste...")
+    ahk_script = os.path.join(ROOT_DIR, "tools", "stealth_paste.ahk")
+    os.startfile(ahk_script) # รันไฟล์ .ahk โดยตรง
     
-    # รอโหลด 20 วินาที (ชัวร์ไว้ก่อน)
-    print("Waiting 20s for ChatGPT to load fully...")
-    time.sleep(20)
-
-    # 4. ใช้ Tab เพื่อหาช่องแชท (Address Bar -> Chat Input)
-    # โดยปกติกด Tab ประมาณ 10 ครั้งจะเจอช่องพิมพ์พอดี
-    print("Action: Focusing via TAB keys...")
-    for _ in range(10): 
-        pyautogui.press('tab')
-        time.sleep(0.1)
-
-    # 5. พิมพ์ลิงก์วิดีโอ (ตัวกระตุ้น Focus)
-    print(f"Action: Typing YouTube URL manually...")
-    pyautogui.write(task['url'])
-    time.sleep(1)
-    
-    # ขึ้นบรรทัดใหม่
-    pyautogui.hotkey('shift', 'enter')
-    time.sleep(0.5)
-
-    # 6. วางเนื้อหาที่เหลือ
-    print("Action: Pasting prompt instructions...")
-    pyperclip.copy(template)
-    pyautogui.hotkey('ctrl', 'v')
-    time.sleep(2)
-    
-    # 7. ส่งภารกิจ
-    pyautogui.press('enter')
+    print("✅ Mission Handoff to AHK Successful!")
     
     print("✅ Mission Sent Successfully!")
 
