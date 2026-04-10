@@ -34,13 +34,18 @@ AI-Content-Studio/ (Root)
 ลากไฟล์ที่ได้จาก AI มาวางในโฟลเดอร์ตามหมวดหมู่ได้ทันที (Git จะมองข้ามไฟล์เหล่านี้โดยอัตโนมัติ)
 
 ### 2. ตัดวิดีโอ YouTube
-รันคำสั่งโดยระบุตำแหน่งโฟลเดอร์ `youtube`:
+รันคำสั่งโดยระบุตำแหน่งโฟลเดอร์โครงการ:
 ```dos
-:: โหลดและตัด (รองรับโหมดอัตโนมัติ)
+:: โครงการปกติ (Public/Revenue)
 download.bat "[URL]" --start [SEC] --duration [SEC] --output "result.mp4"
+
+:: โครงการส่วนตัว (Private/Religious)
+download.bat "[URL]" --start [SEC] --duration [SEC] --output "result.mp4" --project private
 ```
-*   **วิดีโอ < 30 นาที**: ระบบจะใช้การ Streaming (ไม่เก็บไฟล์ตัวเต็ม)
-*   **วิดีโอ > 30 นาที**: ระบบจะโหลด **Master** ตัวเต็มมาเก็บไว้ก่อน แล้วค่อยทำการตัด (แม่นยำและรวดเร็วกว่า)
+*   **--project**: เลือกได้ระหว่าง `public` (ค่าเริ่มต้น) หรือ `private`
+*   **Storage**: 
+    - `projects/public/` -> สำหรับงานสร้างรายได้
+    - `projects/private/` -> สำหรับงานส่วนตัว/ศาสนา
 
 ---
 

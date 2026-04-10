@@ -3,15 +3,12 @@ yt-dlp.exe
 bin/*
 !bin/.gitkeep
 
-# Permanent Assets Folders (Keep folders, ignore content)
-youtube/*
-!youtube/.gitkeep
-images/*
-!images/.gitkeep
-animations/*
-!animations/.gitkeep
-music/*
-!music/.gitkeep
+# Project Assets (Ignore all date-based folders and master storage)
+projects/*/youtube/2*
+projects/*/images/2*
+projects/*/animations/2*
+projects/*/music/2*
+youtube/masters/
 
 # Global Media Safety (Anti-accidental upload)
 *.mp4
