@@ -20,11 +20,11 @@ AI-Content-Studio/ (Root)
 │   ├── public_commercial/  <-- งานสร้างรายได้ 💰
 │   │   └── [YYYY-MM-DD]/   <-- โฟลเดอร์วันที่
 │   │       ├── youtube/    ├── images/
-│   │       ├── music/      └── animations/
+│   │       ├── music/      └── video-animation/
 │   └── personal_religious/ <-- งานส่วนตัว/ศาสนา 🙏
 │       └── [YYYY-MM-DD]/
 │           ├── youtube/    ├── images/
-│           ├── music/      └── animations/
+│           ├── music/      └── video-animation/
 └── AI_STUDIO_RULES.md      <-- กฎเกณฑ์กำกับ AI Assistant 🧠
 ```
 

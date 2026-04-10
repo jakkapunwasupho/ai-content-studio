@@ -6,8 +6,8 @@ import re
 import json
 from datetime import datetime
 
-# --- CONFIGURATION (Add more categories here in the future) ---
-CATEGORIES = ['images', 'music', 'animations', 'youtube']
+# --- CONFIGURATION (Updated CATEGORIES) ---
+CATEGORIES = ['images', 'music', 'video-animation', 'youtube']
 
 # --- Ultra-Premium CLI Styles ---
 class Style:
@@ -47,19 +47,16 @@ def save_metadata(path, data):
 
 def process_video(url, start_time=None, duration=None, last_seconds=None, output_name="clip_result.mp4", project_type="public_commercial"):
     root_dir = os.path.dirname(os.path.abspath(__file__))
-    ytdlp_path = os.path.join(root_dir, "bin", "yt-dlp.exe") # Updated path
+    ytdlp_path = os.path.join(root_dir, "bin", "yt-dlp.exe")
     ffmpeg_path = os.path.join(root_dir, "bin", "ffmpeg.exe")
     
-    # Project Base Path
     project_dir = os.path.join(root_dir, "projects", project_type)
     today_str = datetime.now().strftime("%Y-%m-%d")
     date_dir = os.path.join(project_dir, today_str)
     
-    # INITIALIZE ALL CATEGORIES
     for cat in CATEGORIES:
         os.makedirs(os.path.join(date_dir, cat), exist_ok=True)
     
-    # Master storage setup
     master_dir = os.path.join(root_dir, "youtube", "masters")
     os.makedirs(master_dir, exist_ok=True)
     
