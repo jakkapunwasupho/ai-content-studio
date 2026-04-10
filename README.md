@@ -36,12 +36,11 @@ AI-Content-Studio/ (Root)
 ### 2. ตัดวิดีโอ YouTube
 รันคำสั่งโดยระบุตำแหน่งโฟลเดอร์ `youtube`:
 ```dos
-:: โหลด
-yt-dlp.exe "[URL]" -o "youtube/full_video.webm"
-
-:: ตัด
-bin\ffmpeg.exe -ss [START] -t [DURATION] -i "youtube/full_video.webm" -c:v libx264 -c:a aac -preset fast "youtube/clip_result.mp4"
+:: โหลดและตัด (รองรับโหมดอัตโนมัติ)
+download.bat "[URL]" --start [SEC] --duration [SEC] --output "result.mp4"
 ```
+*   **วิดีโอ < 30 นาที**: ระบบจะใช้การ Streaming (ไม่เก็บไฟล์ตัวเต็ม)
+*   **วิดีโอ > 30 นาที**: ระบบจะโหลด **Master** ตัวเต็มมาเก็บไว้ก่อน แล้วค่อยทำการตัด (แม่นยำและรวดเร็วกว่า)
 
 ---
 
