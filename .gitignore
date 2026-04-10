@@ -26,3 +26,9 @@ bin/
 
 # Logs
 *.log
+.vscode/
+.idea/
+
+# Windows
+Thumbs.db
+Desktop.ini

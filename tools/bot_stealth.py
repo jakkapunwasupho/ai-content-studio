@@ -11,8 +11,8 @@ sys.stdout.reconfigure(encoding='utf-8')
 
 # --- CONFIGURATION ---
 CHROME_PATH = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
-CHROME_PROFILE = "Profile 1" 
-CHAT_URL = "https://chatgpt.com"
+CHROME_PROFILE = "Profile 3" 
+CHAT_URL = "https://gemini.google.com"
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 QUEUE_FILE = os.path.join(ROOT_DIR, "youtube_queue.json")
@@ -49,14 +49,26 @@ def run_mission():
     pyperclip.copy(full_prompt)
     time.sleep(1)
 
-    # 4. เรียกใช้ AutoHotkey มาจัดการ Focus และ Paste (ชัวร์ที่สุดบน Windows)
-    print("Action: Triggering AutoHotkey for Stealth Paste...")
+    # 4. เรียกใช้ AutoHotkey มาจัดการส่ง Prompt รอบที่ 1 (วิเคราะห์)
+    print("Action: Sending Prompt #1 (Analysis)...")
     ahk_script = os.path.join(ROOT_DIR, "tools", "stealth_paste.ahk")
-    os.startfile(ahk_script) # รันไฟล์ .ahk โดยตรง
+    os.startfile(ahk_script) 
     
-    print("✅ Mission Handoff to AHK Successful!")
+    # 5. รอ 60 วินาทีให้ Gemini วิเคราะห์เสร็จ (นับถอยหลัง)
+    print("\nWaiting 60s for Gemini to analyze before asking for image...")
+    for i in range(60, 0, -1):
+        sys.stdout.write(f"\rNext step in: {i}s ")
+        sys.stdout.flush()
+        time.sleep(1)
+    print("\n")
+
+    # 6. เตรียมและส่ง Prompt รอบที่ 2 (สั่งสร้างรูป)
+    print("Action: Preparing Prompt #2 (Image Generation)...")
+    pyperclip.copy("* สร้างรูปได้เลย")
+    time.sleep(1)
+    os.startfile(ahk_script) # เรียก AHK มาช่วยวางอีกครั้ง
     
-    print("✅ Mission Sent Successfully!")
+    print("✅ Full Mission (2-Steps) Sent Successfully!")
 
     # นับถอยหลัง 60 วิ
     for i in range(60, 0, -1):

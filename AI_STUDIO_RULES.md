@@ -1,21 +1,20 @@
 # 📜 AI STUDIO OPERATIONAL RULES (กฎเหล็กการทำงาน)
 
-ไฟล์นี้คือกฎระเบียบสำหรับพัฒนาและรันระบบ AI Content Studio เพื่อรักษาความปลอดภัยและความแม่นยำ
+ไฟล์นี้คือกฎระเบียบสำหรับพัฒนาและรันระบบ AI Content Studio เวอร์ชัน **Hybrid (Python + AHK)**
 
 ## 🔐 กฎด้านความปลอดภัย (Stealth & Security)
-- **ห้ามเปลี่ยนวิธีคุมเบราเซอร์**: ต้องใช้ `PyAutoGUI` (OS-Level) เท่านั้น ห้ามใช้ Selenium หรือ Playwright เด็ดขาดเพื่อป้องกันการโดน AI ฝั่งตรงข้ามตรวจพบ (Anti-Bot Detection).
-- **Profile Lockdown**: ต้องรันผ่าน Chrome Profile **"panagon"** (`Profile 1`) เท่านั้น ห้ามรันผ่านโปรไฟล์ส่วนตัว.
-- **Human-Like Delay**: ห้ามตัดเวลา `time.sleep()` ออกจนเหลือศูนย์ ต้องรักษาความเร็วในการพิมพ์และคลิกให้เหมือนมนุษย์.
+- **Hybrid Automation**: ใช้ `Python` สำหรับจัดการเตรียมข้อมูลหลังบ้าน และเรียกใช้ `AutoHotkey (AHK)` เพื่อจัดการหน้าต่าง (WinActivate) และการวางข้อความ (Paste) เพื่อความแม่นยำสูงสุด
+- **Profile Lockdown**: ต้องรันผ่าน Chrome Profile **"Profile 3"** เท่านั้น เพื่อแยกสภาพแวดล้อมการทำงาน
+- **Gemini Centric**: ระบบปัจจุบันถูกออกแบบมาเพื่อ **Gemini (gemini.google.com)** เป็นหลัก
 
 ## ⌨️ กฎด้านการพิมพ์และนำทาง (Input & Navigation)
-- **No Direct Typing**: ห้ามใช้ `pyautogui.write` สำหรับภาษาไทยหรือ URL ยาวๆ ให้ใช้การ **Copy-Paste (Ctrl+V)** เสมอเพื่อความแม่นยำ.
-- **Address Bar Navigation**: การเข้าเว็บใหม่ต้องทำผ่าน Address Bar (`Ctrl+L`) เสมอ ไม่ใช้การคลิกเมนูสุ่มเสี่ยง.
-- **Snap to Right**: เบราเซอร์งานต้องถูก Snap ไปที่ **ฝั่งขวาของหน้าจอ (3440x1440px)** เสมอ.
+- **AHK Handoff**: เมื่อ Python เตรียม Clipboard เสร็จแล้ว ต้องส่งไม้ต่อให้ `stealth_paste.ahk` จัดการเสมอ ห้ามใช้ `pyautogui` พิมพ์หรือคลิกโดยตรงหากไม่จำเป็น
+- **Window Title Matching**: สคริปต์ AHK ต้องค้นหาหน้าต่างที่มีคำว่า **"Gemini"** ในหัวข้อ (Title Match Mode 2)
+- **2-Step Prompting**: สำหรับ Gemini ต้องแยกการส่งเป็น 2 รอบ (ส่งเนื้อหาวิเคราะห์ก่อน แล้วจึงสั่งสร้างภาพ) โดยหน่วงเวลาอย่างน้อย 60 วินาทีในขั้นตอนแรก
 
 ## 🛠️ มาตรฐานโค้ด (Code Standards)
-- **UTF-8 Enforcement**: ทุกสคริปต์ต้องมีการบังคับ `sys.stdout.reconfigure(encoding='utf-8')` เพื่อรองรับภาษาไทยใน Terminal.
-- **Modular Tools**: โค้ดใหม่ต้องแยกเป็นไฟล์ย่อยในโฟลเดอร์ `tools/` ไม่นำมาปนกับ `studio.py`.
-- **Fail-Safe**: ต้องมี `KeyboardInterrupt` (Ctrl+C) ที่ทำงานได้ตลอดเวลาเพื่อให้มนุษย์ตัดการทำงานบอทได้ทันที.
+- **UTF-8 Enforcement**: ทุกสคริปต์ต้องรองรับ UTF-8 เพื่อรองรับภาษาไทยใน Terminal และการส่ง Prompt
+- **Fail-Safe**: ต้องมี `KeyboardInterrupt` (Ctrl+C) ใน Python และ `ExitApp` ใน AHK เพื่อให้มนุษย์ตัดการทำงานบอทได้ทันทีเมื่อจำเป็น
 
 ---
-*กฎนี้ถูกตั้งขึ้นเพื่อความยั่งยืนของบัญชีและประสิทธิภาพของสตูดิโอ*
+*กฎนี้ถูกปรับปรุงสำหรับการรัน Gemini แบบเสถียร 100% (Update: 2026-04-11)*

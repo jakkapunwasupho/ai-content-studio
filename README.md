@@ -1,54 +1,50 @@
-# 🧘 AI Content Studio: Dharma Automation Pipeline
+# 🧘 AI Content Studio: Dharma Automation Pipeline (Gemini Edition)
 
-ระบบอัตโนมัติสำหรับผลิตเนื้อหา "ธรรมทาน" โดยใช้พลังของ AI (ChatGPT/Gemini) และสคริปต์ Python ในการคุมระบบแบบ Stealth Automation
+ระบบอัตโนมัติสำหรับผลิตเนื้อหา "ธรรมทาน" โดยใช้พลังของ **Gemini AI** และสคริปต์ **Hybrid (Python + AutoHotkey)** ในการคุมระบบแบบ Stealth Automation
 
 ## 🚀 ฟีเจอร์หลัก (Main Features)
-- **Mission Control Dashboard**: หน้าจอควบคุมกลาง (`studio.py`) สำหรับจัดการคิวงาน
-- **Stealth Bot**: บอทอัจฉริยะ (`tools/bot_stealth.py`) ที่เลียนแบบพฤติกรรมมนุษย์ในการส่ง Prompt และจัดการรูปภาพผ่านเบราเซอร์
-- **Video Handler**: ระบบดาวน์โหลดและตัดคลิป Highlight อัตโนมัติจาก YouTube
-- **Image Cleaning Lab**: ระบบตกแต่งรูปภาพ ตัดลายน้ำ และปรับขนาดเป็น 4:5 (1080x1350) สำหรับโซเชียลมีเดีย
-- **Prompt Templating**: ระบบแยกชุดคำสั่งไว้ใน `prompt_template.md` เพื่อให้ง่ายต่อการปรับแต่งเนื้อหา
+- **Hybrid Stealth Bot**: รวมพลัง `Python` (ประมวลผล) และ `AutoHotkey` (ควบคุมหน้าต่าง) เพื่อความแม่นยำ 100% บนหน้าเว็บ Gemini
+- **Gemini Centric Workflow**: รองรับการส่ง Prompt แบบ 2 ขั้นตอน (วิเคราะห์ก่อน แล้วจึงสั่งสร้างภาพ)
+- **Profile Isolation**: รันผ่าน Chrome **Profile 3** เพื่อความปลอดภัยของบัญชีหลัก
+- **Video & Image Hub**: พร้อมระบบจัดการวิดีโอ YouTube และเตรียมรูปภาพ 4:5 (1080x1350)
 
 ## 🛠️ โครงสร้างโปรเจกต์ (Project Structure)
 ```text
 ai-content-studio/
-├── studio.py              # หน้าจอหลัก (Mission Control)
-├── prompt_template.md     # แม่แบบคำสั่งชุดใหญ่สำหรับ AI
-├── youtube_queue.json     # คิวงานและสถานะวิดีโอ 100+ รายการ
+├── studio.py              # หน้าจอควบคุมภารกิจหลัก
+├── youtube_queue.json     # คิวงานและสถานะการประมวลผล
+├── prompt_template.md     # แม่แบบคำสั่งเพื่อให้ Gemini สร้างภาพธรรมะ
 ├── tools/
-│   ├── bot_stealth.py     # บอทคุม Chrome (ChatGPT/Gemini)
+│   ├── bot_stealth.py     # ตัวคุมเบราเซอร์ (เปิด Gemini และเตรียม Clipboard)
+│   ├── stealth_paste.ahk  # ตัวช่วยของเบราเซอร์ (คลิกวางและส่งงานแม่นๆ)
 │   ├── video_handler.py   # จัดการโหลด/ตัดวิดีโอ
-│   └── image_cleaner.py   # จัดการตกแต่งรูปภาพ
-└── requirements.txt       # Library ที่จำเป็น (Pillow, PyAutoGUI, etc.)
+│   └── image_cleaner.py   # ตกแต่งรูปภาพ
+└── requirements.txt       # Library ที่จำเป็น
 ```
 
 ## 🎮 วิธีการเริ่มต้น (Getting Started)
 
-### 1. ติดตั้ง Library
-```bash
-pip install -r requirements.txt
-```
+1. **ติดตั้ง Dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### 2. ตั้งค่าคิวงาน
-แก้ไขไฟล์ `youtube_queue.json` เพื่อเพิ่มลิงก์ YouTube ที่ต้องการประมวลผล
+2. **รันภารกิจ (Start Mission)**
+   เปิดเบราเซอร์และส่งงานอัตโนมัติ:
+   ```bash
+   python tools/bot_stealth.py
+   ```
 
-### 3. รันภารกิจ (Start Mission)
-รันบอทเพื่อส่ง Prompt ไปยัง AI:
-```bash
-python tools/bot_stealth.py
-```
-
-### 4. ตรวจสอบ Dashboard
-รันหน้าจัดการหลักเพื่อดูสถานะงานทั้งหมด:
-```bash
-python studio.py
-```
+3. **ตรวจสอบสถานะ**
+   ดูคิวงานและจัดการวิดีโอผ่านหน้า Dashboard:
+   ```bash
+   python studio.py
+   ```
 
 ## 🛡️ นโยบายความปลอดภัย (Stealth Strategy)
-ระบบนี้ถูกออกแบบมาเพื่อ **หลีกเลี่ยงการโดนแบน** โดยใช้เทคนิค:
-1. **OS-Level Automation**: ไม่มีการฉีดโค้ดเข้าเบราเซอร์ ทำงานผ่านสัญญาณคีย์บอร์ดจริง
-2. **Browser Profile Isolation**: ใช้โปรไฟล์ Chrome แยกเฉพาะ (panagon) เพื่อความปลอดภัยของบัญชีหลัก
-3. **Behavior Simulation**: มีการหน่วงเวลา และใช้การก๊อปปี้วางที่เป็นธรรมชาติ
+ระบบใช้เทคนิค **Hybrid Automation** เพื่อหลีกเลี่ยงการโดนแบนโดย AI ฝั่งตรงข้าม:
+1. **Window-Level Control**: ใช้ AutoHotkey เจาะจงหน้าต่าง Gemini ทำให้คลิกวางและส่งผลลัพธ์แม่นยำเหนือระดับ
+2. **2-Step Prompting**: หน่วงเวลาการส่ง 60 วินาทีเพื่อให้ Gemini วิเคราะห์เนื้อหาก่อนสั่งสร้างภาพ (เลียนแบบการทำบทสรุปของมนุษย์)
 
 ---
-*Created with 🙏 for Dharma Sharing Automation*
+*Created with 🙏 for Dharma Sharing Automation (Gemini Hybrid Version)*
