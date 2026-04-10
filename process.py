@@ -42,13 +42,15 @@ def save_metadata(path, data):
         json.dump(data, f, indent=4, ensure_ascii=False)
     log_info(f"Metadata saved to: {os.path.basename(meta_path)}")
 
-def process_video(url, start_time=None, duration=None, last_seconds=None, output_name="clip_result.mp4", project_type="public"):
+def process_video(url, start_time=None, duration=None, last_seconds=None, output_name="clip_result.mp4", project_type="public_commercial"):
     root_dir = os.path.dirname(os.path.abspath(__file__))
     ytdlp_path = os.path.join(root_dir, "yt-dlp.exe")
     ffmpeg_path = os.path.join(root_dir, "bin", "ffmpeg.exe")
     
-    # Project paths
+    # Project Base Path
     project_dir = os.path.join(root_dir, "projects", project_type)
+    
+    # Subdirectories within project
     youtube_dir = os.path.join(project_dir, "youtube")
     master_dir = os.path.join(root_dir, "youtube", "masters")
     
@@ -64,17 +66,11 @@ def process_video(url, start_time=None, duration=None, last_seconds=None, output
     log_step(f"AI STUDIO ENGINE: [{project_type.upper()}] | Initializing...")
     
     total_duration = get_video_duration(url, ytdlp_path)
-    if total_duration:
-        log_info(f"Video Length: {total_duration}s")
-    else:
-        log_warn("Could not determine video length.")
-
     is_long_video = total_duration and total_duration > 1800
     
     if last_seconds and total_duration:
         start_time = max(0, total_duration - last_seconds)
         duration = last_seconds
-        log_info(f"Target: Last {last_seconds}s (Starting at {start_time}s)")
 
     metadata = {
         "url": url,
@@ -90,31 +86,23 @@ def process_video(url, start_time=None, duration=None, last_seconds=None, output
         log_step("Strategy: Master + Clip workflow")
         master_file = os.path.join(master_dir, f"master_{vid_id}.mp4")
         if not os.path.exists(master_file):
-            log_info("Downloading FULL MASTER (Storage Mode)...")
+            log_info("Downloading MASTER...")
             dl_cmd = [ytdlp_path, '-f', 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]', '-o', master_file, url]
             subprocess.run(dl_cmd)
-        else:
-            log_success("Master found in Central Storage.")
         
-        log_info("Cutting segment from Master...")
         ffmpeg_cmd = [ffmpeg_path, '-y', '-i', master_file]
         if start_time is not None: ffmpeg_cmd += ['-ss', str(start_time)]
         if duration is not None: ffmpeg_cmd += ['-t', str(duration)]
         ffmpeg_cmd += ['-c', 'copy', output_path]
         subprocess.run(ffmpeg_cmd, capture_output=True)
     else:
-        log_step("Strategy: Direct High-Precision Streaming")
-        log_info("Fetching remote stream URL...")
+        log_step("Strategy: Direct Streaming")
         cmd_url = [ytdlp_path, '-g', '-f', 'bestvideo+bestaudio/best', url]
         res = subprocess.run(cmd_url, capture_output=True, text=True)
-        if res.returncode != 0: 
-            log_error("Failed to fetch stream URL.")
-            return
-        
+        if res.returncode != 0: return
         urls = res.stdout.strip().split('\n')
         v_url = urls[0]
         a_url = urls[1] if len(urls) > 1 else v_url
-        
         ffmpeg_cmd = [ffmpeg_path, '-y']
         if start_time is not None: ffmpeg_cmd += ['-ss', str(start_time)]
         ffmpeg_cmd += ['-i', v_url]
@@ -122,25 +110,21 @@ def process_video(url, start_time=None, duration=None, last_seconds=None, output
             if start_time is not None: ffmpeg_cmd += ['-ss', str(start_time)]
             ffmpeg_cmd += ['-i', a_url]
         if duration is not None: ffmpeg_cmd += ['-t', str(duration)]
-        
         ffmpeg_cmd += ['-c:v', 'libx264', '-c:a', 'aac', '-preset', 'fast', '-shortest', output_path]
-        log_info("Executing Remote Cut...")
         subprocess.run(ffmpeg_cmd, capture_output=True)
 
     if os.path.exists(output_path) and os.path.getsize(output_path) > 0:
         save_metadata(output_path, metadata)
-        log_success(f"Work Complete! Saved to: {Style.BOLD}{output_path}{Style.END}")
-    else:
-        log_error("File production failed or empty output.")
+        log_success(f"Work Complete! Saved to: {output_path}")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="AI Content Studio: Premium Video Downloader")
+    parser = argparse.ArgumentParser(description="AI Content Studio")
     parser.add_argument("url", help="YouTube URL")
     parser.add_argument("--start", type=float, help="Start time in seconds")
     parser.add_argument("--duration", type=float, help="Duration in seconds")
     parser.add_argument("--last", type=float, help="Cut the last X seconds")
     parser.add_argument("--output", default="clip_result.mp4", help="Output filename")
-    parser.add_argument("--project", choices=["public", "private"], default="public", help="Project type")
+    parser.add_argument("--project", choices=["public_commercial", "personal_religious"], default="public_commercial", help="Project type")
     
     args = parser.parse_args()
     process_video(args.url, args.start, args.duration, args.last, args.output, args.project)

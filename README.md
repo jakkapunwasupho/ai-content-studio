@@ -36,16 +36,16 @@ AI-Content-Studio/ (Root)
 ### 2. ตัดวิดีโอ YouTube
 รันคำสั่งโดยระบุตำแหน่งโฟลเดอร์โครงการ:
 ```dos
-:: โครงการปกติ (Public/Revenue)
+:: โครงการปกติ (Public/Commercial)
 download.bat "[URL]" --start [SEC] --duration [SEC] --output "result.mp4"
 
-:: โครงการส่วนตัว (Private/Religious)
-download.bat "[URL]" --start [SEC] --duration [SEC] --output "result.mp4" --project private
+:: โครงการส่วนตัว (Personal/Religious)
+download.bat "[URL]" --start [SEC] --duration [SEC] --output "result.mp4" --project personal_religious
 ```
-*   **--project**: เลือกได้ระหว่าง `public` (ค่าเริ่มต้น) หรือ `private`
+*   **--project**: เลือกได้ระหว่าง `public_commercial` (ค่าเริ่มต้น) หรือ `personal_religious`
 *   **Storage**: 
-    - `projects/public/` -> สำหรับงานสร้างรายได้
-    - `projects/private/` -> สำหรับงานส่วนตัว/ศาสนา
+    - `projects/public_commercial/` -> สำหรับงานสร้างรายได้
+    - `projects/personal_religious/` -> สำหรับงานส่วนตัว/ศาสนา
 
 ---
 
