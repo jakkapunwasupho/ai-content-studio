@@ -1,16 +1,7 @@
 # 🚀 AI-Content-Studio
 > **The Ultimate All-in-One AI-Generated Media Hub & Manager**
 
-ศูนย์รวมและเครื่องมือจัดการวัตถุดิบ Content จาก AI แบบครบวงจร (YouTube, Images, Music, Animations)
-
----
-
-## 🛠️ การตั้งค่าเริ่มต้น (Initial Setup)
-
-1.  **เตรียมเครื่องมือ**:
-    *   วาง `yt-dlp.exe` ไว้ที่ **หน้าแรก (Root)** ของโปรเจกต์
-    *   วาง `ffmpeg.exe` ไว้ในโฟลเดอร์ `bin/` (มีให้แล้ว)
-2.  **จัดการไฟล์**: นำไฟล์สื่อที่ได้จาก AI หรือดาวน์โหลดมา วางลงในโฟลเดอร์หมวดหมู่ที่เตรียมไว้ให้แล้ว
+ศูนย์รวมและเครื่องมือจัดการวัตถุดิบ Content จาก AI แบบครบวงจร แยกหมวดหมู่ตามโครงการและวันที่
 
 ---
 
@@ -18,44 +9,45 @@
 
 ```text
 AI-Content-Studio/ (Root)
-├── yt-dlp.exe      <-- เครื่องมือดาวน์โหลด
-├── bin/            <-- เครื่องมือตัดต่อ (ffmpeg)
-├── youtube/        <-- เก็บวิดีโอจาก YouTube 🎥
-├── images/         <-- เก็บรูปจาก AI (Gemini, Grok) 🖼️
-├── animations/     <-- เก็บวิดีโอ AI (Runway, Luma) 🎬
-└── music/          <-- เก็บเพลง AI (Suno, Udio) 🎵
+├── yt-dlp.exe              <-- เครื่องมือดาวน์โหลด
+├── bin/                    <-- เครื่องมือตัดต่อ (ffmpeg)
+├── youtube/
+│   └── masters/            <-- เก็บวิดีโอตัวเต็ม (แชร์ร่วมกัน) 📦
+├── projects/
+│   ├── public_commercial/  <-- งานสร้างรายได้ 💰
+│   │   └── [YYYY-MM-DD]/   <-- โฟลเดอร์วันที่
+│   │       ├── youtube/    ├── images/
+│   │       ├── music/      └── animations/
+│   └── personal_religious/ <-- งานส่วนตัว/ศาสนา 🙏
+│       └── [YYYY-MM-DD]/
+│           ├── youtube/    ├── images/
+│           ├── music/      └── animations/
+└── AI_STUDIO_RULES.md      <-- กฎเกณฑ์กำกับ AI Assistant 🧠
 ```
 
 ---
 
-## 🚀 ขั้นตอนการทำงาน (Workflow)
+## 🚀 การใช้งาน (Usage)
 
-### 1. จัดเก็บสื่อ
-ลากไฟล์ที่ได้จาก AI มาวางในโฟลเดอร์ตามหมวดหมู่ได้ทันที (Git จะมองข้ามไฟล์เหล่านี้โดยอัตโนมัติ)
+ใช้คำสั่งผ่าน Terminal เพื่อดาวน์โหลดและตัดคลิปอัตโนมัติ:
 
-### 2. ตัดวิดีโอ YouTube
-รันคำสั่งโดยระบุตำแหน่งโฟลเดอร์โครงการ:
+### 1. งานทั่วไป (Public)
 ```dos
-:: โครงการปกติ (Public/Commercial)
-download.bat "[URL]" --start [SEC] --duration [SEC] --output "result.mp4"
-
-:: โครงการส่วนตัว (Personal/Religious)
-download.bat "[URL]" --start [SEC] --duration [SEC] --output "result.mp4" --project personal_religious
+download.bat "[URL]" --start [SEC] --duration [SEC] --output "clip.mp4"
 ```
-*   **--project**: เลือกได้ระหว่าง `public_commercial` (ค่าเริ่มต้น) หรือ `personal_religious`
-*   **Storage**: 
-    - `projects/public_commercial/` -> สำหรับงานสร้างรายได้
-    - `projects/personal_religious/` -> สำหรับงานส่วนตัว/ศาสนา
+
+### 2. งานส่วนตัว/ศาสนา (Private)
+```dos
+download.bat "[URL]" --start [SEC] --duration [SEC] --output "clip.mp4" --project personal_religious
+```
+
+*ใช้ `--last [SEC]` เพื่อตัดเอาช่วงท้ายคลิปอัตโนมัติ*
 
 ---
 
-### 🧠 ข้อมูลสำหรับ AI Assistant (Instruction for AI)
-หากต้องการให้ AI ช่วย:
-- **YouTube**: บอก URL และเวลาเริ่ม/จบ (AI จะสร้างคำสั่งให้)
-- **Organization**: บอกประเภทไฟล์ AI จะแนะนำโฟลเดอร์ที่ถูกต้องให้
+## 🧠 ข้อมูลสำหรับ AI Assistant
+โปรเจกต์นี้ทำงานตามกฎใน [AI_STUDIO_RULES.md](AI_STUDIO_RULES.md) กรุณาอ่านและปฏิบัติตามโครงสร้างเสมอ
 
----
-
-### 🔧 การบำรุงรักษา (Maintenance)
+## 🔧 การบำรุงรักษา (Maintenance)
 *   **Update yt-dlp**: `yt-dlp.exe -U`
-*   **Clean Up**: โฟลเดอร์เหล่านี้จะถูกละเว้นจาก Git คุณสามารถลบไฟล์ข้างในได้ทุกเมื่อโดยไม่กระทบต่อ Git History
+*   **Clean Up**: ไฟล์สื่อในโฟลเดอร์วันที่ถูกละเว้นจาก Git สามารถลบได้เมื่อจบงานโดยไม่กระทบต่อ Git History

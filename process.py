@@ -6,6 +6,9 @@ import re
 import json
 from datetime import datetime
 
+# --- CONFIGURATION (Add more categories here in the future) ---
+CATEGORIES = ['images', 'music', 'animations', 'youtube']
+
 # --- Ultra-Premium CLI Styles ---
 class Style:
     BLUE = '\033[94m'
@@ -49,21 +52,21 @@ def process_video(url, start_time=None, duration=None, last_seconds=None, output
     
     # Project Base Path
     project_dir = os.path.join(root_dir, "projects", project_type)
-    
-    # Subdirectories within project
-    youtube_dir = os.path.join(project_dir, "youtube")
-    master_dir = os.path.join(root_dir, "youtube", "masters")
-    
     today_str = datetime.now().strftime("%Y-%m-%d")
-    today_dir = os.path.join(youtube_dir, today_str)
+    date_dir = os.path.join(project_dir, today_str)
     
-    for d in [master_dir, today_dir]:
-        os.makedirs(d, exist_ok=True)
-        
-    output_path = os.path.join(today_dir, output_name)
+    # INITIALIZE ALL CATEGORIES
+    for cat in CATEGORIES:
+        os.makedirs(os.path.join(date_dir, cat), exist_ok=True)
+    
+    # Master storage setup
+    master_dir = os.path.join(root_dir, "youtube", "masters")
+    os.makedirs(master_dir, exist_ok=True)
+    
+    output_path = os.path.join(date_dir, "youtube", output_name)
     vid_id = get_video_id(url)
 
-    log_step(f"AI STUDIO ENGINE: [{project_type.upper()}] | Initializing...")
+    log_step(f"AI STUDIO ENGINE: [{project_type.upper()}] | Initializing {today_str}...")
     
     total_duration = get_video_duration(url, ytdlp_path)
     is_long_video = total_duration and total_duration > 1800
@@ -86,7 +89,7 @@ def process_video(url, start_time=None, duration=None, last_seconds=None, output
         log_step("Strategy: Master + Clip workflow")
         master_file = os.path.join(master_dir, f"master_{vid_id}.mp4")
         if not os.path.exists(master_file):
-            log_info("Downloading MASTER...")
+            log_info(f"Downloading Master for {vid_id}...")
             dl_cmd = [ytdlp_path, '-f', 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]', '-o', master_file, url]
             subprocess.run(dl_cmd)
         
