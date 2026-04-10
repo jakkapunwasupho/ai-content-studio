@@ -1,23 +1,28 @@
-# Executables & Binaries
-yt-dlp.exe
-bin/*
-!bin/.gitkeep
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+.env
 
-# Project Assets (Ignore all date-based folders)
-projects/*/20*
-projects/source-vault/
-
-# Global Media Safety (Anti-accidental upload)
+# Studio Media (ไฟล์งานจริงไม่ควรขึ้น Git)
+downloaded/
+output/
 *.mp4
-*.webm
 *.mkv
-*.mp3
-*.wav
+*.webm
 *.png
 *.jpg
 *.jpeg
-*.gif
 
-# System files
-.DS_Store
-Thumbs.db
+# ยกเว้นไฟล์ Icon ที่บอทต้องใช้
+!tools/download_icon.png
+
+# Binaries
+bin/
+*.exe
+
+# Logs
+*.log

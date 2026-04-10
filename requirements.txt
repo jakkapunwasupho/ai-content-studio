@@ -1,0 +1,4 @@
+Pillow
+pyautogui
+opencv-python
+yt-dlp
