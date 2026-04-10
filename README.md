@@ -14,16 +14,16 @@ AI-Content-Studio/ (Root)
 ├── bin/                    <-- โฟลเดอร์เก็บโปรแกรม 🛠️
 │   ├── yt-dlp.exe          <-- ตัวดาวน์โหลด (ย้ายมาที่นี่แล้ว)
 │   └── ffmpeg.exe          <-- ตัวตัดต่อ
-├── youtube/
+├── video-clips/
 │   └── masters/            <-- เก็บวิดีโอตัวเต็ม (แชร์ร่วมกัน) 📦
 ├── projects/
 │   ├── public_commercial/  <-- งานสร้างรายได้ 💰
 │   │   └── [YYYY-MM-DD]/   <-- โฟลเดอร์วันที่
-│   │       ├── youtube/    ├── images/
+│   │       ├── video-clips/    ├── images/
 │   │       ├── music/      └── video-animation/
 │   └── personal_religious/ <-- งานส่วนตัว/ศาสนา 🙏
 │       └── [YYYY-MM-DD]/
-│           ├── youtube/    ├── images/
+│           ├── video-clips/    ├── images/
 │           ├── music/      └── video-animation/
 └── AI_STUDIO_RULES.md      <-- กฎเกณฑ์กำกับ AI Assistant 🧠
 ```

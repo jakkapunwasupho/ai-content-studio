@@ -12,10 +12,10 @@
 - `images/`: เก็บรูปภาพ (AI Generated, Photo)
 - `music/`: เก็บเพลงและเสียงประกอบ
 - `video-animation/`: เก็บวิดีโอแอนิเมชันสั้น
-- `youtube/`: เก็บวิดีโอที่โหลดหรือตัดมาจาก YouTube
+- `video-clips/`: เก็บวิดีโอที่โหลดหรือตัดมาจาก YouTube
 
 ## 🔧 กฎการทำงาน (Core Logic)
-- **Video > 30 mins**: ให้โหลดไฟล์ Master มาเก็บที่ `youtube/masters/` ก่อน แล้วค่อยตัดจากเครื่อง
+- **Video > 30 mins**: ให้โหลดไฟล์ Master มาเก็บที่ `video-clips/masters/` ก่อน แล้วค่อยตัดจากเครื่อง
 - **Video < 30 mins**: ให้ใช้ระบบ Direct Streaming เพื่อความรวดเร็ว
 - **Metadata**: ทุกคลิปวิดีโอต้องมีไฟล์ `.json` บันทึกต้นฉบับเสมอ
 

@@ -6,8 +6,8 @@ import re
 import json
 from datetime import datetime
 
-# --- CONFIGURATION (Updated CATEGORIES) ---
-CATEGORIES = ['images', 'music', 'video-animation', 'youtube']
+# --- CONFIGURATION ---
+CATEGORIES = ['images', 'music', 'video-animation', 'video-clips']
 
 # --- Ultra-Premium CLI Styles ---
 class Style:
@@ -50,17 +50,20 @@ def process_video(url, start_time=None, duration=None, last_seconds=None, output
     ytdlp_path = os.path.join(root_dir, "bin", "yt-dlp.exe")
     ffmpeg_path = os.path.join(root_dir, "bin", "ffmpeg.exe")
     
+    # Project Base Path
     project_dir = os.path.join(root_dir, "projects", project_type)
     today_str = datetime.now().strftime("%Y-%m-%d")
     date_dir = os.path.join(project_dir, today_str)
     
+    # INITIALIZE ALL CATEGORIES
     for cat in CATEGORIES:
         os.makedirs(os.path.join(date_dir, cat), exist_ok=True)
     
-    master_dir = os.path.join(root_dir, "youtube", "masters")
+    # NEW SHARED MASTER STORAGE (Source Vault)
+    master_dir = os.path.join(root_dir, "projects", "source-vault")
     os.makedirs(master_dir, exist_ok=True)
     
-    output_path = os.path.join(date_dir, "youtube", output_name)
+    output_path = os.path.join(date_dir, "video-clips", output_name)
     vid_id = get_video_id(url)
 
     log_step(f"AI STUDIO ENGINE: [{project_type.upper()}] | Initializing {today_str}...")

@@ -5,7 +5,7 @@ bin/*
 
 # Project Assets (Ignore all date-based folders)
 projects/*/20*
-youtube/masters/
+projects/source-vault/
 
 # Global Media Safety (Anti-accidental upload)
 *.mp4
