@@ -1,16 +1,28 @@
-# Executables & Binaries (Ignore local tools)
+# Executables & Binaries
 yt-dlp.exe
 bin/*
 !bin/.gitkeep
 
-# Temporary and Downloaded Folders
-Download_*/
-full_video.webm
+# Permanent Assets Folders (Keep folders, ignore content)
+youtube/*
+!youtube/.gitkeep
+images/*
+!images/.gitkeep
+animations/*
+!animations/.gitkeep
+music/*
+!music/.gitkeep
 
-# Video Outputs (Ignore large files)
+# Global Media Safety (Anti-accidental upload)
 *.mp4
 *.webm
 *.mkv
+*.mp3
+*.wav
+*.png
+*.jpg
+*.jpeg
+*.gif
 
 # System files
 .DS_Store
