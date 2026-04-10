@@ -1,0 +1,17 @@
+# Executables & Binaries (Ignore local tools)
+yt-dlp.exe
+bin/*
+!bin/.gitkeep
+
+# Temporary and Downloaded Folders
+Download_*/
+full_video.webm
+
+# Video Outputs (Ignore large files)
+*.mp4
+*.webm
+*.mkv
+
+# System files
+.DS_Store
+Thumbs.db
